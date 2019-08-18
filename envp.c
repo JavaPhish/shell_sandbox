@@ -9,11 +9,11 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	char *bin_path;
-
+	int loop;
 	(void)argc;
 	(void)argv;
 
-	for (int loop = 0; envp[loop] != NULL; loop++)
+	for (loop = 0; envp[loop] != NULL; loop++)
 	{
 		if (_contains(envp[loop], "PATH")
 			&& _contains(envp[loop], "_PATH") != 1
@@ -24,6 +24,7 @@ int main(int argc, char *argv[], char *envp[])
 			}
 	}
 
+	printf("%s\n", bin_path);
 
 	bin_path = strtok(bin_path, "=");
 	bin_path = strtok(NULL, "=");

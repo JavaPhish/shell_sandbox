@@ -12,9 +12,6 @@ int main(void)
 	size_t buffer_size = 0;
 	size_t chars_printed;
 
-	buffer = malloc(buffer_size);
-	if (!buffer)
-		exit(1);
 
 	while (chars_printed != EOF)
 	{
