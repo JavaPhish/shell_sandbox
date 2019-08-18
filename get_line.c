@@ -9,7 +9,7 @@
 int main(void)
 {
 	char *buffer;
-	size_t buffer_size = 1024;
+	size_t buffer_size = 0;
 	size_t chars_printed;
 
 	buffer = malloc(buffer_size);
