@@ -12,6 +12,6 @@ int main( void )
 	args[2] = NULL;
 
 
-        execv( args[0], args ); // child: call execv with the path and the args
+        execve( args[0], args, NULL ); // child: call execv with the path and the args
     return 0;
 }
