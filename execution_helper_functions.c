@@ -34,7 +34,6 @@ char *find_path(char *env[])
 	return (bin_path);
 }
 
-
 /**
  * _contains - Checks if a string contains a given set of chars
  * @str: The string to check through
@@ -70,7 +69,6 @@ int _contains(char *str, char *keyword)
 	return (0);
 }
 
-
 /**
  * cmd_parser - seperates each parameter into a slot in an array
  * @cmd_to_parse: The command for parse (for ex. "Ls - l")
@@ -82,12 +80,8 @@ char **cmd_parser(char *cmd_to_parse)
 	char **parsed_command;
 	char *str_to_tok = _strdup(cmd_to_parse);
 	char *counter = strtok(str_to_tok, " ");
-	char *temp;
-	int loop, alloc_loop;
-	int max_byte_size = 0;
-
-	str_to_tok = _strdup(cmd_to_parse);
-	temp = str_to_tok;
+	int loop;
+	unsigned int max_byte_size = 0;
 
 	/* Determines the amount of slots needed to allocate in the 2d Array*/
 	for (loop = 0; counter != NULL; loop++)
@@ -142,10 +136,6 @@ char *_strdup(char *str)
 	return (arr);
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-
-
 /**
  * str_concat - Concatenates two strings into one
  * @s1: the first string
@@ -191,4 +181,3 @@ char *str_concat(char *s1, char *s2)
 	}
 	return (arr);
 }
-
