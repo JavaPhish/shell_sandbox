@@ -6,22 +6,24 @@
 #include "sandbox.h"
 #include <string.h>
 
-int main(int argc, char *argv, char *envp[])
+/**
+ * execution_handler - Executes the given command
+ * @raw_cmd: The command passed on by the user (not ready for execve)
+ * @envp: The environment variable from origin main
+ *
+ * Return: 1 on success, 0 if failure;
+ */
+int execution_handler(char *raw_cmd, char **env)
 {
-	char *bin_path = find_path(envp);
-	char *command = "pwd";
+	char *bin_path = find_path(env);
 	char **cmd_to_exec;
 	char *temp;
 
-	/*Voids argc since we have no need
-	for the amount of arguments passed*/
-	(void)argc;
-	(void)argv;
-
+	printf("%s\n", bin_path);
 	/*Calls a function which seperates the commands
 	individual components into slots in an array.
 	This is done for use in execve(filepath, command arguments)*/
-	cmd_to_exec = cmd_parser(command);
+	cmd_to_exec = cmd_parser(raw_cmd);
 
 	/*Attempts to execve with every file within the path
 	once it find the correct one (Correct one being the one containing

@@ -29,7 +29,7 @@ char *find_path(char *env[])
         }
 
 	bin_path = strtok(bin_path, "=");
-	bin_path = strtok(NULL, "=");
+	bin_path = _strdup(strtok(NULL, "="));
 
 	return (bin_path);
 }
@@ -46,6 +46,12 @@ int _contains(char *str, char *keyword)
 	int loop, check_loop;
 
 	check_loop = 0;
+
+	if (str[0] == '\0')
+		return (0);
+
+	if (keyword[0] == '\0')
+		return (0);
 
 	if (!str)
 		return (0);
