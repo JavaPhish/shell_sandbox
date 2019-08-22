@@ -84,42 +84,62 @@ int _contains(char *str, char *keyword)
 char **cmd_parser(char *cmd_to_parse)
 {
 	char **parsed_command;
-	char *str_to_tok = _strdup(cmd_to_parse);
-	char *counter = strtok(str_to_tok, " ");
-	int loop;
-	unsigned int max_byte_size = 0;
+        char *counter, *row_alloc, *tok_cmd, *ptr_origin;
+	int loop, byte_to_alloc;
 
+
+	counter = malloc(sizeof_string(cmd_to_parse));
+	ptr_origin = counter;
+	_strcpy(counter, cmd_to_parse);
+        counter = strtok(counter, " ");
+
+	printf("%s\n", cmd_to_parse);
 	/* Determines the amount of slots needed to allocate in the 2d Array*/
-
 	for (loop = 0; counter != NULL; loop++)
 		counter = strtok(NULL, " ");
 
-	if (sizeof(*counter) > max_byte_size)
-		max_byte_size = sizeof(*counter);
+	free(counter);
+	free(ptr_origin);
 
-	printf("max_byte_size = %i\n", max_byte_size);
-	parsed_command = malloc((sizeof(char*) * max_byte_size));
+        loop++;
 
-	/* for (loop = 0; counter != NULL; loop++) */
-	/* { */
-	/* 	counter = strtok(NULL, " "); */
-	/* 	if (sizeof(counter) > max_byte_size) */
-	/* 		max_byte_size = sizeof(counter); */
-	/* } */
-	/* parsed_command = malloc(loop * max_byte_size); */
+	parsed_command = malloc(sizeof(char *) * loop);
 
-	counter = _strdup(cmd_to_parse);
-	counter = strtok(counter, " ");
-
-	for (loop = 0; counter != NULL; loop++)
+	row_alloc = malloc(sizeof_string(cmd_to_parse));
+	ptr_origin = row_alloc;
+	_strcpy(row_alloc, cmd_to_parse);
+	row_alloc = strtok(row_alloc, " ");
+	for (loop = 0; row_alloc != NULL; loop++)
 	{
-		parsed_command[loop] = counter;
-		counter = strtok(NULL, " ");
+		byte_to_alloc = 0;
+		while (row_alloc[byte_to_alloc] != '\0')
+			byte_to_alloc++;
+
+		parsed_command[loop] = malloc(byte_to_alloc + 1);
+		row_alloc = strtok(NULL, " ");
 	}
+
+	free(ptr_origin);
+	free(row_alloc);
+
+	tok_cmd = malloc(sizeof_string(cmd_to_parse));
+	ptr_origin = tok_cmd;
+	_strcpy(tok_cmd, cmd_to_parse);
+	tok_cmd = strtok(tok_cmd, " ");
+	for (loop = 0; tok_cmd != NULL; loop++)
+	{
+		_strcpy(parsed_command[loop], (char *)tok_cmd);
+		tok_cmd = strtok(NULL, " ");
+	}
+	free(ptr_origin);
+	free(tok_cmd);
 
 	parsed_command[loop] = NULL;
 
-	free(str_to_tok);
+
+	free(tok_cmd);
+	free(row_alloc);
+	free(counter);
 	return (parsed_command);
 }
 
