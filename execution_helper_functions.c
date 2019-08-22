@@ -90,25 +90,35 @@ char **cmd_parser(char *cmd_to_parse)
 	unsigned int max_byte_size = 0;
 
 	/* Determines the amount of slots needed to allocate in the 2d Array*/
-	for (loop = 0; counter != NULL; loop++)
-	{
-		counter = strtok(NULL, " ");
-		if (sizeof(counter) > max_byte_size)
-			max_byte_size = sizeof(counter);
-	}
 
-	parsed_command = malloc(loop * max_byte_size);
+	for (loop = 0; counter != NULL; loop++)
+		counter = strtok(NULL, " ");
+
+	if (sizeof(*counter) > max_byte_size)
+		max_byte_size = sizeof(*counter);
+
+	printf("max_byte_size = %i\n", max_byte_size);
+	parsed_command = malloc((sizeof(char*) * max_byte_size));
+
+	/* for (loop = 0; counter != NULL; loop++) */
+	/* { */
+	/* 	counter = strtok(NULL, " "); */
+	/* 	if (sizeof(counter) > max_byte_size) */
+	/* 		max_byte_size = sizeof(counter); */
+	/* } */
+	/* parsed_command = malloc(loop * max_byte_size); */
 
 	counter = _strdup(cmd_to_parse);
 	counter = strtok(counter, " ");
+
 	for (loop = 0; counter != NULL; loop++)
 	{
 		parsed_command[loop] = counter;
 		counter = strtok(NULL, " ");
 	}
+
 	parsed_command[loop] = NULL;
 
-	free(counter);
 	free(str_to_tok);
 	return (parsed_command);
 }

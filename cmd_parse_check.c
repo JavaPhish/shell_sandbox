@@ -4,7 +4,7 @@
 
 int main()
 {
-	char *cmd = "ls -l";
+	char *cmd = "ls -l -a";
 	char **cmd_list;
 	int loop;
 	int height;
@@ -15,7 +15,7 @@ int main()
 		printf("%s\n", cmd_list[loop]);
 
 	height = loop;
-
+	printf("height: %i\n", height);
 	for (loop = 0; loop < height; loop++)
 		free(cmd_list[loop]);
 
