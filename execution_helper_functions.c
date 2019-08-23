@@ -31,6 +31,7 @@ char *find_path(char *env[])
 	bin_path = strtok(bin_path, "=");
 	bin_path = _strdup(strtok(NULL, "="));
 
+
 	return (bin_path);
 }
 

@@ -16,6 +16,7 @@
 int execution_handler(char *raw_cmd, char **env)
 {
 	char *bin_path = find_path(env);
+	char *executable_command;
 	char **cmd_to_exec;
 	char *temp;
 
@@ -23,7 +24,7 @@ int execution_handler(char *raw_cmd, char **env)
 	/*Calls a function which seperates the commands
 	individual components into slots in an array.
 	This is done for use in execve(filepath, command arguments)*/
-	cmd_to_exec = cmd_parser(raw_cmd);
+	cmd_to_exec = envp_cpy(cmd_parser(raw_cmd));
 
 	/*Attempts to execve with every file within the path
 	once it find the correct one (Correct one being the one containing
@@ -31,7 +32,13 @@ int execution_handler(char *raw_cmd, char **env)
 	temp = strtok(bin_path, ":");
 	while (temp != NULL)
 	{
-		execve(str_concat(temp, str_concat("/", cmd_to_exec[0])), cmd_to_exec, NULL);
+		executable_command = str_concat(temp, str_concat("/", cmd_to_exec[0]));
+
+		if (access(executable_command, F_OK) == 0)
+		{
+			execve(executable_command, cmd_to_exec, NULL);
+		}
+
 		temp = strtok(NULL, ":");
 	}
 
