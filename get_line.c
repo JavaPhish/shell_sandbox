@@ -11,15 +11,13 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	char *buffer;
-	char *copied_string;
 	size_t buffer_size = 0;
 	size_t chars_printed;
-	char **env = envp_cpy(envp);
 
 	(void)argc;
 	(void)argv;
 
-	while (chars_printed != EOF)
+	while (chars_printed != (size_t)EOF)
 	{
 		write(1, "$ ", sizeof(char) * 2);
 		chars_printed = getline(&buffer, &buffer_size, stdin);
