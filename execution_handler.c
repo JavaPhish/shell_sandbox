@@ -20,7 +20,6 @@ int execution_handler(char *raw_cmd, char **env)
 	char **cmd_to_exec;
 	char *temp;
 
-	printf("%s\n", bin_path);
 	/*Calls a function which seperates the commands
 	individual components into slots in an array.
 	This is done for use in execve(filepath, command arguments)*/
@@ -37,6 +36,7 @@ int execution_handler(char *raw_cmd, char **env)
 		if (access(executable_command, F_OK) == 0)
 		{
 			execve(executable_command, cmd_to_exec, NULL);
+			return (1);
 		}
 
 		temp = strtok(NULL, ":");

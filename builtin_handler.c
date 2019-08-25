@@ -8,8 +8,6 @@ int print_env(char *envp[]);
 
 int builtin_handler(char *cmd, char *envp[])
 {
-
-	printf("%s\n", cmd);
 	if (_strcmp(cmd, "env") == 0)
 	{
 		print_env(envp);
@@ -28,10 +26,10 @@ int print_env(char *envp[])
 	loop = 0;
 	while (envp[loop] != NULL)
 	{
-		printf("%s\n", envp[loop]);
+		write(1, envp[loop], sizeof_string(envp[loop]));
+		write(1, "\n", 1);
 		loop++;
 	}
 
 	return (1);
-
 }
