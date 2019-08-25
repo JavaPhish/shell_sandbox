@@ -11,5 +11,7 @@ int execution_handler(char *raw_cmd, char *envp[]);
 char *_strcpy(char *dest, char *src);
 int sizeof_string(char *str);
 char **envp_cpy(char *envp[]);
+int builtin_handler(char *cmd, char *envp[]);
+int _strcmp(char *s1, char *s2);
 
 #endif
