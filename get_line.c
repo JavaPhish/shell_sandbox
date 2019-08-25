@@ -30,7 +30,7 @@ int main(int argc, char *argv[], char *envp[])
 		otherwise, execution is called */
 		if (builtin_handler(cln_cmd, envp) != 1)
 		{
-			execution_handler(cln_cmd, envp_cpy(envp));
+			execution_handler(cln_cmd, envp);
 		}
 	}
 
