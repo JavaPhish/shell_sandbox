@@ -5,6 +5,14 @@
 
 #include "sandbox.h"
 
+/**
+ * main - contains the loop and input handler for the rest of the shell
+ * @argc: Casted to void(Unused)
+ * @argv: Casted to void(Unused)
+ * @envp: Used to find the path containing system commands
+ *
+ * Return: 1 on success, 0 on screw up
+ */
 int main(int argc, char *argv[], char *envp[])
 {
 	char *buffer = NULL;
@@ -22,22 +30,21 @@ int main(int argc, char *argv[], char *envp[])
 		buffer = strtok(buffer, "\n");
 
 		if (buffer != NULL)
-			write(1, buffer, sizeof_string(buffer));
-		write(1, "\n", sizeof("\n"));
-
-		if (builtin_handler(buffer, envp) == 0)
 		{
-			/*
-			 *If builtin handler returns 0, it did not find
-			 *a builtin function by the provided name. So now
-			 *we will attempt to execute it as an executable.
-			*/
+			if (builtin_handler(buffer, envp) == 0)
+			{
+				/*
+				 *If builtin handler returns 0, it did not find
+				 *a builtin function by the provided name. So now
+				 *we will attempt to execute it as an executable.
+				*/
 
-			execution_handler(buffer, envp);
+				execution_handler(buffer, envp);
 
+			}
 		}
+		write(1, "\n", sizeof("\n"));
 	}
-
 	free(strtok_address);
 
 	return (1);
