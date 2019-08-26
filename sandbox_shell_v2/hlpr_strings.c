@@ -48,7 +48,7 @@ int _strcmp(char *s1, char *s2)
 
 
         loop = 0;
-        while (loop > -1)
+        while (loop > - 1)
         {
                 if (s1[loop] == '\0' && s2[loop] == '\0')
                         return (0);
@@ -106,5 +106,3 @@ int _contains(char *str, char *keyword)
         }
         return (0);
 }
-
-

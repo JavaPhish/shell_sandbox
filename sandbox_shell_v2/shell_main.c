@@ -42,8 +42,8 @@ int main(int argc, char *argv[], char *envp[])
 				execution_handler(buffer, envp);
 
 			}
+			write(1, "\n", sizeof("\n"));
 		}
-		write(1, "\n", sizeof("\n"));
 	}
 	free(strtok_address);
 
