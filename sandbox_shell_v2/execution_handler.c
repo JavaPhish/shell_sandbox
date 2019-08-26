@@ -42,6 +42,10 @@ int execution_handler(char *cmd, char **env)
                 if (access(path_with_cmd, F_OK) == 0)
                 {
                         execve(path_with_cmd, arr_of_args, NULL);
+
+			free(path_to_free);
+			free(path_with_cmd);
+
                         return (1);
                 }
 
