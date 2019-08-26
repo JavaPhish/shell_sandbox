@@ -14,6 +14,9 @@ int builtin_handler(char *cmd, char *envp[])
                 return (1);
         }
 
+	if (_strcmp(cmd, "exit") == 0)
+		exit(1);
+
         return (0);
 }
 
