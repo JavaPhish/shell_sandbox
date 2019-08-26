@@ -8,6 +8,13 @@ int print_env(char *envp[]);
 char *find_home_dir(char *envp[]);
 int change_directory(char **parsed_cmd, char *envp[]);
 
+/**
+ * builtin_handler - Handles the execution of built in functions
+ * @cmd: the command the user is attempting to run
+ * @envp: The environment variables
+ *
+ * Return: 1 if a builtin was found and ran, 0 if not
+ */
 int builtin_handler(char *cmd, char *envp[])
 {
 	char **parsed_cmd;
@@ -39,6 +46,12 @@ int builtin_handler(char *cmd, char *envp[])
         return (0);
 }
 
+/**
+ * find_home_dir - Finds the home directory for use in cd
+ * @envp: The variables to parse through
+ *
+ * Return: The home directory
+ */
 char *find_home_dir(char *envp[])
 {
 	int loop;
@@ -63,6 +76,13 @@ char *find_home_dir(char *envp[])
 	return (home_path);
 }
 
+/**
+ * change_directory - the builtin cd command
+ * @parsed_cmd: the command along with parameters
+ * @envp: The environment variables
+ *
+ * Return: 1 on success
+ */
 int change_directory(char **parsed_cmd, char *envp[])
 {
 	if (parsed_cmd[1] == NULL)
@@ -80,13 +100,19 @@ int change_directory(char **parsed_cmd, char *envp[])
 	{
 		write(1, "bash: cd: ", sizeof("bash: cd: ") * sizeof(char));
 		write(1, parsed_cmd[1], sizeof_string(parsed_cmd[1]));
-		write(1, ": No such file or directory",
-		sizeof(": No such file or directory") * sizeof(char));
+		write(1, ": No such file or directory\n",
+		sizeof(": No such file or directory\n") * sizeof(char));
 	}
 
 	return (1);
 }
 
+/**
+ * print_env - Prints the environment variables
+ * @envp: The environment to print
+ *
+ * Return: 1 on success
+ */
 int print_env(char *envp[])
 {
         int loop;
