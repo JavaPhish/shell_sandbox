@@ -2,7 +2,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <sys/wait.h>
+#include <sys/types.h>
 #include "sandbox.h"
 
 /**
@@ -33,16 +34,8 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			if (builtin_handler(buffer, envp) == 0)
 			{
-				/*
-				 *If builtin handler returns 0, it did not find
-				 *a builtin function by the provided name. So now
-				 *we will attempt to execute it as an executable.
-				*/
-
 				execution_handler(buffer, envp);
-
 			}
-			write(1, "\n", sizeof("\n"));
 		}
 	}
 	free(strtok_address);
