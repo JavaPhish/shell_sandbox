@@ -5,19 +5,86 @@
 #include <unistd.h>
 
 int print_env(char *envp[]);
+char *find_home_dir(char *envp[]);
+int change_directory(char **parsed_cmd, char *envp[]);
 
 int builtin_handler(char *cmd, char *envp[])
 {
-        if (_strcmp(cmd, "env") == 0)
+	char **parsed_cmd;
+
+	parsed_cmd = cmd_parser(cmd);
+
+        if (_strcmp(parsed_cmd[0], "env") == 0)
         {
                 print_env(envp);
                 return (1);
         }
-
-	if (_strcmp(cmd, "exit") == 0)
+	else
+	if (_strcmp(parsed_cmd[0], "exit") == 0)
+	{
 		exit(1);
+		return (1);
+	}
+	else
+	if (_strcmp(parsed_cmd[0], "cd") == 0)
+	{
+
+		if (change_directory(parsed_cmd, envp) == 1)
+			return (1);
+
+		return(0);
+	}
+
 
         return (0);
+}
+
+char *find_home_dir(char *envp[])
+{
+	int loop;
+	char *home_path;
+	char *rm_home;
+
+	for (loop = 0; envp[loop] != NULL; loop++)
+	{
+		if (_contains(envp[loop], "HOME=") == 1)
+			rm_home = envp[loop];
+	}
+
+	home_path = malloc((sizeof(rm_home) - 5) * sizeof(char));
+
+	loop = 5;
+	while (rm_home[loop] != '\0')
+	{
+		home_path[loop -5] = rm_home[loop];
+		loop++;
+	}
+
+	return (home_path);
+}
+
+int change_directory(char **parsed_cmd, char *envp[])
+{
+	if (parsed_cmd[1] == NULL)
+	{
+		chdir(find_home_dir(envp));
+		return (1);
+	}
+	else
+	if (_strcmp(parsed_cmd[1], "-") == 0)
+		chdir("..");
+	else
+	if (access(parsed_cmd[1], F_OK) == 0)
+		chdir(parsed_cmd[1]);
+	else
+	{
+		write(1, "bash: cd: ", sizeof("bash: cd: ") * sizeof(char));
+		write(1, parsed_cmd[1], sizeof_string(parsed_cmd[1]));
+		write(1, ": No such file or directory",
+		sizeof(": No such file or directory") * sizeof(char));
+	}
+
+	return (1);
 }
 
 int print_env(char *envp[])
