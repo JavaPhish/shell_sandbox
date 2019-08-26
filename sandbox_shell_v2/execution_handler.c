@@ -16,9 +16,8 @@
 int execution_handler(char *cmd, char **env)
 {
         char *bin_path = find_path(env);
-        char *path_with_cmd;
+        char *path_with_cmd, *path_tokenizer, *path_to_free;
         char **arr_of_args;
-        char *path_tokenizer;
 	int path_attempts;
 
         /*Calls a function which seperates the commands
@@ -31,6 +30,7 @@ int execution_handler(char *cmd, char **env)
         once it find the correct one (Correct one being the one containing
         the requested command) it runs the command*/
         path_tokenizer = strtok(bin_path, ":");
+	path_to_free = path_tokenizer;
 	path_attempts = 0;
 
 	path_with_cmd = malloc(sizeof(cmd));
@@ -51,6 +51,9 @@ int execution_handler(char *cmd, char **env)
                 	path_tokenizer = strtok(NULL, ":");
        		path_attempts++;
 	 }
+
+	free(path_to_free);
+	free(path_with_cmd);
 
         return 0;
 }
