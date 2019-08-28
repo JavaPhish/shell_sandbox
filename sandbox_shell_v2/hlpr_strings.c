@@ -1,5 +1,11 @@
 
-
+/**
+ * _strcpy - Non destructively copies a string
+ * @dest: The pointer to copy to
+ * @src: THe pointer to copy
+ *
+ * Return: The pointer to dest
+ */
 char *_strcpy(char *dest, char *src)
 {
 	char *pdest = dest;
@@ -44,26 +50,26 @@ int sizeof_string(char *str)
  */
 int _strcmp(char *s1, char *s2)
 {
-        int loop;
+	int loop;
 
 
-        loop = 0;
-        while (loop > - 1)
-        {
-                if (s1[loop] == '\0' && s2[loop] == '\0')
-                        return (0);
+	loop = 0;
+	while (loop > -1)
+	{
+		if (s1[loop] == '\0' && s2[loop] == '\0')
+			return (0);
 
-                if (s1[loop] != s2[loop])
-                {
-                        if (s1[loop] > s2[loop])
-                                return (s1[loop] - s2[loop]);
-                        else
-                                return (-(s2[loop] - s1[loop]));
-                }
-                loop++;
-        }
+		if (s1[loop] != s2[loop])
+		{
+			if (s1[loop] > s2[loop])
+				return (s1[loop] - s2[loop]);
+			else
+				return (-(s2[loop] - s1[loop]));
+		}
+		loop++;
+	}
 
-        return (0);
+	return (0);
 }
 
 /**
@@ -75,34 +81,33 @@ int _strcmp(char *s1, char *s2)
  */
 int _contains(char *str, char *keyword)
 {
-        int loop, check_loop;
+	int loop, check_loop;
 
-        check_loop = 0;
+	check_loop = 0;
 
-        if (str[0] == '\0')
-                return (0);
+	if (str[0] == '\0')
+		return (0);
 
-        if (keyword[0] == '\0')
-                return (0);
+	if (keyword[0] == '\0')
+		return (0);
 
-        if (!str)
-                return (0);
-        if (!keyword)
-                return (0);
+	if (!str)
+		return (0);
+	if (!keyword)
+		return (0);
 
+	for (loop = 0; str[loop] != '\0'; loop++)
+	{
+		if (keyword[check_loop] == '\0')
+			return (1);
 
-        for (loop = 0; str[loop] != '\0'; loop++)
-        {
-                if (keyword[check_loop] == '\0')
-                        return (1);
+		if (str[loop] == keyword[check_loop])
+			check_loop++;
+		else
+			check_loop = 0;
 
-                if (str[loop] == keyword[check_loop])
-                        check_loop++;
-                else
-                        check_loop = 0;
-
-                if (str[loop + 1] == '\0' && keyword[check_loop] == '\0')
-                        return (1);
-        }
-        return (0);
+		if (str[loop + 1] == '\0' && keyword[check_loop] == '\0')
+			return (1);
+	}
+	return (0);
 }
