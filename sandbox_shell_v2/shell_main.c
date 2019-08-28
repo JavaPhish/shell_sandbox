@@ -31,7 +31,6 @@ int main(int argc, char *argv[], char *envp[])
 		chars_printed = getline(&buffer, &buffer_size, stdin);
 		strtok_address = buffer;
 		buffer = strtok(buffer, "\n");
-
 		if (buffer != NULL)
 		{
 			if (builtin_handler(buffer, envp) == 0)
@@ -39,20 +38,14 @@ int main(int argc, char *argv[], char *envp[])
 				pid = fork();
 				if (pid == 0)
 				{
-					if (execution_handler(buffer, envp) == - 1)
-					{
+					if (execution_handler(buffer, envp) == -1)
 						printf("Error");
-					}
 					exit(EXIT_FAILURE);
 				}
 				else
-				{
 					do
-					{
 						waitpid(pid, &status, WUNTRACED);
-					}
 					while (!WIFEXITED(status) && !WIFSIGNALED(status));
-				}
 			}
 		}
 	}
