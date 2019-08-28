@@ -20,12 +20,7 @@ int execution_handler(char *cmd, char **env)
         char **arr_of_args;
 	int path_attempts;
 
-        /*Calls a function which seperates the commands
-        individual components into slots in an array.
-        This is done for use in execve(filepath, command arguments)*/
         arr_of_args = cmd_parser(cmd);
-
-
         /*Attempts to execve with every file within the path
         once it find the correct one (Correct one being the one containing
         the requested command) it runs the command*/
@@ -42,20 +37,17 @@ int execution_handler(char *cmd, char **env)
                 if (access(path_with_cmd, F_OK) == 0)
                 {
                         execve(path_with_cmd, arr_of_args, NULL);
-
 			free(path_to_free);
 			free(path_with_cmd);
-
                         return (1);
                 }
-
 		path_with_cmd = str_concat(path_tokenizer, str_concat("/", arr_of_args[0]));
-
 		if (path_attempts != 0)
                 	path_tokenizer = strtok(NULL, ":");
        		path_attempts++;
 	 }
-
+	write(1, arr_of_args[0], sizeof(arr_of_args));
+	write(1, ": command not found\n", sizeof(": command not found\n"));
 	free(path_to_free);
 	free(path_with_cmd);
 
