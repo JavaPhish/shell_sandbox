@@ -19,14 +19,10 @@ char **cmd_parser(char *cmd_to_parse)
 	ptr_origin = counter;
 	_strcpy(counter, cmd_to_parse);
 	counter = strtok(counter, " ");
-
 	for (loop = 0; counter != NULL; loop++)
 		counter = strtok(NULL, " ");
-	free(ptr_origin);
 	loop++;
-
 	parsed_command = malloc(sizeof(char *) * loop);
-
 	row_alloc = malloc(sizeof_string(cmd_to_parse));
 	ptr_origin = row_alloc;
 	_strcpy(row_alloc, cmd_to_parse);
@@ -36,12 +32,9 @@ char **cmd_parser(char *cmd_to_parse)
 		byte_to_alloc = 0;
 		while (row_alloc[byte_to_alloc] != '\0')
 			byte_to_alloc++;
-
 		parsed_command[loop] = malloc(byte_to_alloc + 1);
 		row_alloc = strtok(NULL, " ");
 	}
-	free(ptr_origin);
-
 	tok_cmd = malloc(sizeof_string(cmd_to_parse));
 	ptr_origin = tok_cmd;
 	_strcpy(tok_cmd, cmd_to_parse);
@@ -53,9 +46,7 @@ char **cmd_parser(char *cmd_to_parse)
 	}
 	free(ptr_origin);
 	free(tok_cmd);
-
 	parsed_command[loop] = NULL;
-
 	free(row_alloc);
 	free(counter);
 	return (parsed_command);
@@ -78,12 +69,12 @@ char *find_path(char *env[])
 	for (loop = 0; env[loop] != NULL; loop++)
 	{
 		if (_contains(env[loop], "PATH")
-			&& _contains(env[loop], "_PATH") != 1
-			&& _contains(env[loop], "WPATH") != 1)
-			{
-				bin_path = malloc(sizeof(env[loop]));
-				bin_path = env[loop];
-			}
+		&& _contains(env[loop], "_PATH") != 1
+		&& _contains(env[loop], "WPATH") != 1)
+		{
+			bin_path = malloc(sizeof(env[loop]));
+			bin_path = env[loop];
+		}
 	}
 
 	bin_path = strtok(bin_path, "=");
@@ -136,4 +127,19 @@ char *str_concat(char *s1, char *s2)
 	}
 
 	return (arr);
+}
+
+/**
+ * free_2d_array - Used for simplified freeing of 2d arrays
+ * @arr: The pointer to free
+ */
+void free_2d_array(char **arr)
+{
+	int loop;
+
+	loop = 0;
+	while (arr[loop] != NULL)
+		free(arr[loop]);
+
+	free(arr);
 }
