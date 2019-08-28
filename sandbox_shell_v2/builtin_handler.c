@@ -97,6 +97,11 @@ int change_directory(char **parsed_cmd, char *envp[])
 	if (access(parsed_cmd[1], F_OK) == 0)
 		chdir(parsed_cmd[1]);
 	else
+	if (parsed_cmd[2] != NULL)
+	{
+		write(1, "bash: cd: too many arguments\n", sizeof("bash: cd: too many argument\n"));
+	}
+	else
 	{
 		write(1, "bash: cd: ", sizeof("bash: cd: ") * sizeof(char));
 		write(1, parsed_cmd[1], sizeof_string(parsed_cmd[1]));
