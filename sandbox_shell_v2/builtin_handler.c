@@ -21,11 +21,11 @@ int builtin_handler(char *cmd, char *envp[])
 
 	parsed_cmd = cmd_parser(cmd);
 
-        if (_strcmp(parsed_cmd[0], "env") == 0)
-        {
-                print_env(envp);
-                return (1);
-        }
+	if (_strcmp(parsed_cmd[0], "env") == 0)
+	{
+		print_env(envp);
+		return (1);
+	}
 	else
 	if (_strcmp(parsed_cmd[0], "exit") == 0)
 	{
@@ -39,11 +39,10 @@ int builtin_handler(char *cmd, char *envp[])
 		if (change_directory(parsed_cmd, envp) == 1)
 			return (1);
 
-		return(0);
+		return (0);
 	}
 
-
-        return (0);
+	return (0);
 }
 
 /**
@@ -69,7 +68,7 @@ char *find_home_dir(char *envp[])
 	loop = 5;
 	while (rm_home[loop] != '\0')
 	{
-		home_path[loop -5] = rm_home[loop];
+		home_path[loop - 5] = rm_home[loop];
 		loop++;
 	}
 
@@ -99,7 +98,8 @@ int change_directory(char **parsed_cmd, char *envp[])
 	else
 	if (parsed_cmd[2] != NULL)
 	{
-		write(1, "bash: cd: too many arguments\n", sizeof("bash: cd: too many argument\n"));
+		write(1, "bash: cd: too many arguments\n",
+		      sizeof("bash: cd: too many argument\n"));
 	}
 	else
 	{
@@ -120,16 +120,14 @@ int change_directory(char **parsed_cmd, char *envp[])
  */
 int print_env(char *envp[])
 {
-        int loop;
+	int loop;
 
-        loop = 0;
-        while (envp[loop] != NULL)
-        {
-                write(1, envp[loop], sizeof_string(envp[loop]));
-                write(1, "\n", 1);
-                loop++;
-        }
-
-        return (1);
+	loop = 0;
+	while (envp[loop] != NULL)
+	{
+		write(1, envp[loop], sizeof_string(envp[loop]));
+		write(1, "\n", 1);
+		loop++;
+	}
+	return (1);
 }
-
