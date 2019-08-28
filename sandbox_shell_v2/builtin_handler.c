@@ -10,7 +10,7 @@ int change_directory(char **parsed_cmd, char *envp[]);
 
 /**
  * builtin_handler - Handles the execution of built in functions
- * @cmd: the command the user is attempting to run
+ * @cmd: the commnd the user is attempting to run
  * @envp: The environment variables
  *
  * Return: 1 if a builtin was found and ran, 0 if not
